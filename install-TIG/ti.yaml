@@ -1,0 +1,59 @@
+---
+- name: Install Telegraf and InfluxDB and configure Telegraf to send metrics to InfluxDB
+  hosts: all
+  become: true
+  vars:
+    influxdb_version: "latest"
+    telegraf_version: "latest"
+    influxdb_http_port: 8086
+    influxdb_admin_user: admin
+    influxdb_admin_password: admin
+    influxdb_database: telegraf
+    influxdb_retention_policy: autogen
+    influxdb_measurement: system
+
+  tasks:
+    - name: Install prerequisites
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - apt-transport-https
+        - curl
+
+    - name: Add InfluxDB repository key
+      apt_key:
+        url: https://repos.influxdata.com/influxdb.key
+
+    - name: Add InfluxDB repository
+      apt_repository:
+        repo: "deb https://repos.influxdata.com/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }} stable"
+        state: present
+
+    - name: Install InfluxDB
+      apt:
+        name: influxdb={{ influxdb_version }}
+        state: present
+
+    - name: Start and enable InfluxDB service
+      service:
+        name: influxdb
+        state: started
+        enabled: yes
+
+    - name: Install Telegraf
+      apt:
+        name: telegraf={{ telegraf_version }}
+        state: present
+
+    - name: Configure Telegraf
+      template:
+        src: telegraf.conf.j2
+        dest: /etc/telegraf/telegraf.conf
+      notify: restart telegraf
+
+  handlers:
+    - name: restart telegraf
+      service:
+        name: telegraf
+        state: restarted
