@@ -3,25 +3,22 @@
 - hosts: all
   become: true
   tasks:
-
-  - name: update repo index
-    apt:
-      update_cache: yes
-    when: ansible_distribution == "Ubuntu"
   
-  - name: install apache2 package
+  - name: install apache2 & vim-nox packages for Ubuntu
     apt:
-      name: apache2
+      name: 
+      - apache2
+      - vim-nox
       state: latest
+      update_cache: yes
     when: ansible_distribution == "Ubuntu"
     
-  - name: update repo index
+ 
+  - name: install apache & vim-nox packages for centos
     dnf:
-      update_cache: yes
-    when: ansible_distribution == "Centos"
-  
-  - name: install apache2 package
-    dnf:
-      name: httpd
+      name: 
+      - httpd
+      - vim-nox
       state: latest
-    when: ansible_distribution == "Centos"
+      update_cache: yes
+    when: ansible_distribution == "CentOS"
