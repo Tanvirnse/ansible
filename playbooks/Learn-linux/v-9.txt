@@ -7,7 +7,7 @@
        upgrade: dist
        update_cache: yes
 
-- hosts: web_servers
+- hosts: webservers
    become: true
    tasks:
 
@@ -18,7 +18,7 @@
          - libapache2-mod-php
        state: latest
 
-- hosts: db_servers
+- hosts: db
    become: true
    tasks:
 
