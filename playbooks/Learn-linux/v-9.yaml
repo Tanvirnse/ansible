@@ -1,28 +1,28 @@
 - hosts: all
-   become: true
-   pre_tasks:
+  become: true
+  pre_tasks:
 
-   - name: install updates (Ubuntu)
+  - name: install updates (Ubuntu)
      apt:
        upgrade: dist
-       update_cache: yes
+       update_cache: yes 
 
 - hosts: webservers
-   become: true
-   tasks:
+  become: true
+  tasks:
 
-   - name: install apache2 package (Ubuntu)
+  - name: install apache2 package (Ubuntu)
      apt:
        name:
          - apache2
          - libapache2-mod-php
-       state: latest
+       state: latest 
 
 - hosts: db
-   become: true
-   tasks:
+  become: true
+  tasks:
 
-   - name: install mariadb server
+  - name: install mariadb server
      apt:
        name: mariadb-server
        state: latest
