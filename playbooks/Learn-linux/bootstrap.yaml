@@ -1,0 +1,23 @@
+- hosts: all
+  become: true  
+  tasks:
+ 
+ # - name: create simone user
+ #   user:
+ #     name: tanvir
+ #     groups: root
+
+  - name: add ssh key for simone
+    tags: always
+    authorized_key:
+      user: tanvir
+      key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDxH1tf92mZ1DrtP8iL9YBDFA062zlHNyolUwHaXpIng48Vutq8JYRR/cT4bhc0K8y9vAIrtVBG/D0hGxHUgI0PaS7c5FqYNsY6o9y4lVF0hlAr14jVDImVZB+DZgtetoSGDDoNw8BfPC67A9fXhBdi24TDVS/hLUltOizTrAfwGm/Fjv7sCfkcM1YIUC+Zlx5nzbZ3Z5t0GcGwsdqSz3/TMM4wVnTkv0qMpY4W/z9GqkPJnZ9S9jtV9osT3uap6mtBvfzF2as6BcIyjIq79ADvCDebYHhnzMtbCclPG/Ooo7hdPYH+tlGsSNs3+6dwLrU0iC+IE4j8L/2Ef2NBiIBmLOTgUcLC1XILgJQScO6RAN/jT0wMm0hea05KGdDw+0sjxP728rAkjtdPOHdfAw+JWkJMPrt2obZH2fFqNgcYn342aXIkjs+0I8bwlf5uk5C6cemO7RG3NCqWYrCoNY5XHZhRUkSDyLivDyRnf5UsBi0L2gMy2mhnGg+Vv2gU8BnUprhSiW6c/ARh0tEewOP3CL3ByRLvlv4pfSe7lPwcge4S/KrQbaC8DI4dt9hf2xSwRy4PYYgTzvMZOO9debjFkC+BdIonCNNFr3Yny7cjjdDxhpPfxnykuKq9FJ/2hBGW5uSVN+KrtpW7ISmYrDI+04JaFv9K+PlveoH1pZg/fw== tanvir@Tanv-PC"
+
+  - name: add sudoers file for simone
+    tags: always
+    copy:
+      src: sudoer_tanvir
+      dest: /etc/sudoers.d/tanvir
+      owner: root  
+      group: root
+      mode: 0440

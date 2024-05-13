@@ -27,5 +27,5 @@
   - name: install mariadb server
     tags: db
     apt:
-       name: mariadb-server
+       name: mariadb
        state: absent
