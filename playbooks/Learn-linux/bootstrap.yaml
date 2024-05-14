@@ -2,10 +2,10 @@
   become: true  
   tasks:
  
- # - name: create simone user
- #   user:
- #     name: tanvir
- #     groups: root
+  - name: create simone user
+    user:
+      name: tanvir
+      groups: root
 
   - name: add ssh key for simone
     tags: always
